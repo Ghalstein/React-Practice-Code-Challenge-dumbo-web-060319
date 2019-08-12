@@ -20,7 +20,7 @@ class App extends Component {
 			let count = this.state.index;
 			let sushi = [];
 			while (count < (this.state.index + 4)) {
-				sushi.push(this.state.allSushi[count++])
+				sushi.push(this.state.allSushi[count++]);
 			}
 			return sushi;
 		}
@@ -28,23 +28,25 @@ class App extends Component {
 	}
 
 	handleEatenSushi = (sushi) => {
-		this.setState({eaten:[...this.state.eaten, sushi]})
-		this.schpendTheSchmoney(sushi.price)
+		if (!this.state.eaten.includes(sushi) && (this.state.schmoney - sushi.price >= 0)) {
+			this.setState({eaten:[...this.state.eaten, sushi]});
+			this.schpendTheSchmoney(sushi.price);
+		}
 	}
 
 	handleMoreButtonClicked = () => {
-		this.setState({index: this.state.index + 4})
+		this.setState({index: this.state.index + 4});
 	}
 
 	schpendTheSchmoney = (schmon) => {
-		this.setState({schmoney: this.state.schmoney - schmon})
+		this.setState({schmoney: this.state.schmoney - schmon});
 	}
 
   render() {
     return (
       <div className="app">
       	{this.state.loaded ? <SushiContainer handleMoreButtonClicked={this.handleMoreButtonClicked}  eaten={this.state.eaten} handleEatenSushi={this.handleEatenSushi} sushi={this.showSushi()}/> : <h1>Loading...</h1>} 
-        <Table schmoney={this.state.schmoney}/>
+        <Table emptyPlates={this.state.eaten} schmoney={this.state.schmoney}/>
       </div>
     );
   }
