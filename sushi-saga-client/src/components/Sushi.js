@@ -2,14 +2,13 @@ import React, { Fragment } from 'react'
 
 const Sushi = (props) => {
   const {img_url, name, price} = props.components;
-  console.log(props.components.img_url);
   return (
     <div className="sushi">
       <div className="plate" 
-           onClick={/* Give me a callback! */ null}>
+           onClick={() => props.handleEatenSushi(props.components)}>
         { 
           /* Tell me if this sushi has been eaten! */ 
-          !true ?
+          props.eaten.includes(props.components) ?
             null
           :
             <img src={img_url} width="100%" alt="sushi"/>

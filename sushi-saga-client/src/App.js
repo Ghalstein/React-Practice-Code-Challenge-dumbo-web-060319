@@ -11,7 +11,8 @@ class App extends Component {
 		allSushi: [],
 		eaten: [],
 		index: 0,
-		loaded: false
+		loaded: false,
+		schmoney: 200
 	}
 
 	showSushi = () => {
@@ -26,12 +27,24 @@ class App extends Component {
 		return this.state.allSushi;
 	}
 
+	handleEatenSushi = (sushi) => {
+		this.setState({eaten:[...this.state.eaten, sushi]})
+		this.schpendTheSchmoney(sushi.price)
+	}
+
+	handleMoreButtonClicked = () => {
+		this.setState({index: this.state.index + 4})
+	}
+
+	schpendTheSchmoney = (schmon) => {
+		this.setState({schmoney: this.state.schmoney - schmon})
+	}
+
   render() {
     return (
       <div className="app">
-      	{this.state.loaded ? <SushiContainer  sushi={this.showSushi()}/> : <h1>Loading...</h1>}
-        
-        <Table />
+      	{this.state.loaded ? <SushiContainer handleMoreButtonClicked={this.handleMoreButtonClicked}  eaten={this.state.eaten} handleEatenSushi={this.handleEatenSushi} sushi={this.showSushi()}/> : <h1>Loading...</h1>} 
+        <Table schmoney={this.state.schmoney}/>
       </div>
     );
   }
